@@ -1,0 +1,86 @@
+@model MeetingManager.Application.DTOs.MeetingRequest.UpdateMeetingRequestDto
+
+@{
+    ViewData["Title"] = "تعديل طلب الاجتماع";
+    var managers = ViewBag.Managers as SelectList;
+}
+
+<div class="container mt-4 fade-in">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-7">
+            <div class="card">
+                <div class="card-header">
+                    <i class="bi bi-pencil-square" style="font-size: 2rem;"></i>
+                    <h2 class="mt-2">تعديل طلب الاجتماع</h2>
+                    <p class="mb-0" style="font-size: 0.9rem; opacity: 0.9;">قم بتحديث بيانات طلب الاجتماع</p>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Edit" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                        
+                        <input type="hidden" asp-for="Id" />
+                        <input type="hidden" asp-for="SecretaryId" />
+                        <input type="hidden" asp-for="GroupId" />
+                        
+                        <div class="mb-4">
+                            <label asp-for="Notes" class="form-label">
+                                <i class="bi bi-journal-text ms-1"></i>
+                                ملاحظات الاجتماع
+                            </label>
+                            <textarea asp-for="Notes" class="form-control" rows="5" placeholder="أدخل ملاحظات الاجتماع..."></textarea>
+                            <span asp-validation-for="Notes" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label asp-for="StudentId" class="form-label">
+                                <i class="bi bi-mortarboard ms-1"></i>
+                                رقم الطالب
+                            </label>
+                            <input asp-for="StudentId" class="form-control" type="number" placeholder="أدخل رقم الطالب" />
+                            <span asp-validation-for="StudentId" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label asp-for="ManagerId" class="form-label">
+                                <i class="bi bi-person-check ms-1"></i>
+                                اختر المدير
+                            </label>
+                            <select asp-for="ManagerId" class="form-select" asp-items="managers">
+                                <option value="">-- اختر المدير --</option>
+                            </select>
+                            <span asp-validation-for="ManagerId" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label asp-for="Status" class="form-label">
+                                <i class="bi bi-flag ms-1"></i>
+                                حالة الطلب
+                            </label>
+                            <select asp-for="Status" class="form-select">
+                                <option value="0">قيد الانتظار</option>
+                                <option value="1">مقبول</option>
+                                <option value="2">مرفوض</option>
+                            </select>
+                            <span asp-validation-for="Status" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="d-flex gap-2 justify-content-end mt-4">
+                            <a asp-action="Index" class="btn btn-secondary">
+                                <i class="bi bi-x-circle ms-1"></i>
+                                إلغاء
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-save ms-1"></i>
+                                حفظ التغييرات
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

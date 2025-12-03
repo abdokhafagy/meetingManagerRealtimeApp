@@ -1,0 +1,52 @@
+@model MeetingManager.Application.DTOs.Auth.LoginDto
+
+@{
+    ViewData["Title"] = "تسجيل الدخول";
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+}
+
+<div class="fade-in">
+    <h4 class="text-center mb-4 fw-bold text-dark">تسجيل الدخول</h4>
+    
+    <form asp-action="Login" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3 text-center small"></div>
+        
+        <div class="mb-4">
+            <label asp-for="Email" class="form-label">البريد الإلكتروني</label>
+            <div class="input-group dir-ltr">
+                <input asp-for="Email" class="form-control text-start" type="email" placeholder="name@example.com" />
+                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+            </div>
+            <span asp-validation-for="Email" class="text-danger small"></span>
+        </div>
+        
+        <div class="mb-4">
+            <label asp-for="Password" class="form-label">كلمة المرور</label>
+            <div class="input-group dir-ltr">
+                <input asp-for="Password" class="form-control text-start" type="password" placeholder="••••••••" />
+                <span class="input-group-text"><i class="bi bi-lock"></i></span>
+            </div>
+            <span asp-validation-for="Password" class="text-danger small"></span>
+        </div>
+        
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary w-100 btn-lg shadow-sm">
+                تسجيل الدخول
+                <i class="bi bi-arrow-left ms-2"></i>
+            </button>
+        </div>
+        
+        <!-- <div class="text-center mt-4">
+            <p class="text-muted mb-0">
+                ليس لديك حساب؟ 
+                <a asp-action="Register" class="text-primary fw-bold text-decoration-none">
+                    إنشاء حساب جديد
+                </a>
+            </p>
+        </div> -->
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

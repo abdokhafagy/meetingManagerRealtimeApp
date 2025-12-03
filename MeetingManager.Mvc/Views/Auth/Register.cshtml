@@ -1,0 +1,96 @@
+@model MeetingManager.Application.DTOs.Auth.RegisterDto
+
+@{
+    ViewData["Title"] = "تسجيل حساب جديد";
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+}
+
+<div class="row justify-content-center mt-5 fade-in">
+    <div class="col-md-6 col-lg-5">
+        <div class="card">
+            <div class="card-header text-center">
+                <i class="bi bi-person-plus-fill" style="font-size: 3rem;"></i>
+                <h2 class="mt-2">تسجيل حساب جديد</h2>
+                <p class="mb-0" style="font-size: 0.9rem; opacity: 0.9;">أنشئ حسابك للوصول إلى نظام إدارة الاجتماعات</p>
+            </div>
+            <div class="card-body">
+                <form asp-action="Register" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="FullName" class="form-label">
+                            <i class="bi bi-person ms-1"></i>
+                            الاسم الكامل
+                        </label>
+                        <input asp-for="FullName" class="form-control" placeholder="أدخل اسمك الكامل" />
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label">
+                            <i class="bi bi-envelope ms-1"></i>
+                            البريد الإلكتروني
+                        </label>
+                        <input asp-for="Email" class="form-control" type="email" placeholder="أدخل بريدك الإلكتروني" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="Password" class="form-label">
+                            <i class="bi bi-lock ms-1"></i>
+                            كلمة المرور
+                        </label>
+                        <input asp-for="Password" class="form-control" type="password" placeholder="أدخل كلمة مرور قوية" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                        <small class="form-text">يجب أن تحتوي على 6 أحرف على الأقل</small>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="Role" class="form-label">
+                            <i class="bi bi-person-badge ms-1"></i>
+                            الدور الوظيفي
+                        </label>
+                        <select asp-for="Role" class="form-select">
+                            <option value="">-- اختر الدور --</option>
+                            <option value="1">سكرتير</option>
+                            <option value="2">مدير</option>
+                            <option value="3">مسؤول</option>
+                        </select>
+                        <span asp-validation-for="Role" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label asp-for="GroupId" class="form-label">
+                            <i class="bi bi-people ms-1"></i>
+                            رقم المجموعة
+                        </label>
+                        <input asp-for="GroupId" class="form-control" type="number" placeholder="أدخل رقم المجموعة" />
+                        <span asp-validation-for="GroupId" class="text-danger"></span>
+                        <small class="form-text">رقم المجموعة التي تنتمي إليها</small>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary w-100 btn-lg">
+                            <i class="bi bi-person-plus ms-1"></i>
+                            إنشاء الحساب
+                        </button>
+                    </div>
+                    
+                    <div class="text-center">
+                        <p class="text-muted mb-0">
+                            لديك حساب بالفعل؟ 
+                            <a asp-action="Login" class="text-decoration-none fw-medium">
+                                سجل الدخول هنا
+                                <i class="bi bi-arrow-left"></i>
+                            </a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - إدارة الاجتماعات</title>
+
+    <!-- Google Fonts - Cairo for Arabic -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet"> <!-- Bootstrap RTL CSS -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.rtl.min.css" /> <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"> <!-- Custom CSS -->
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/MeetingManager.Mvc.styles.css" asp-append-version="true" />
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+        }
+
+        a, a:hover {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="bi bi-calendar-check ms-2"></i>
+                    إدارة الاجتماعات
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="تبديل التنقل">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
+                                <i class="bi bi-house-door ms-1"></i>
+                                الرئيسية
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="MeetingRequest" asp-action="Index">
+                                <i class="bi bi-calendar2-check ms-1"></i>
+                                طلبات الاجتماعات
+                            </a>
+                        </li>
+                        @{
+                            var userRole = Context.Session.GetString("UserRole");
+                            var userName = Context.Session.GetString("UserName");
+                        }
+                        @if (!string.IsNullOrEmpty(userName))
+                        {
+                            <li class="nav-item dropdown ms-auto">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-person-circle ms-1"></i>
+                                    @userName
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" style="direction: rtl; text-align: right;">
+                                    <li><span class="dropdown-item-text"><strong>الدور:</strong> @userRole</span></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <a class="dropdown-item" asp-area="" asp-controller="Auth" asp-action="Logout">
+                                            <i class="bi bi-box-arrow-right ms-1"></i>
+                                            تسجيل الخروج
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item ms-auto">
+                                <a class="nav-link" asp-area="" asp-controller="Auth" asp-action="Login">
+                                    <i class="bi bi-box-arrow-in-left ms-1"></i>
+                                    تسجيل الدخول
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    
+    <div class="container mt-4">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container text-center">
+            &copy; 2025 - نظام إدارة الاجتماعات - 
+            <a asp-area="" asp-controller="Home" asp-action="Privacy">سياسة الخصوصية</a>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> <!-- SignalR for ASP.NET Core -->
+    <script src="@Html.Raw("https://cdn.jsdelivr.net/npm/@microsoft/signalr@8.0.0/dist/browser/signalr.min.js")"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script> // Initialize SignalR connection
+     if (typeof signalR === 'undefined') { 
+        console.error("SignalR library not loaded!");
+         } 
+     else {
+         window.connection = new signalR.HubConnectionBuilder() .withUrl("/notificationHub") .withAutomaticReconnect() .build();
+     async function start() { 
+        try { 
+            await window.connection.start(); 
+            console.log("SignalR Connected.");
+        } catch (err) { 
+            console.error("SignalR Connection Error: ", err); 
+            setTimeout(start, 5000); 
+        } 
+     }
+     start(); 
+     
+     }
+     </script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

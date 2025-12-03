@@ -1,0 +1,13 @@
+@model MeetingManager.Domain.Enums.MeetingRequestStatus
+@using MeetingManager.Mvc.Helpers
+
+@{
+    var statusText = ArabicFormatHelper.GetStatusText(Model);
+    var badgeClass = ArabicFormatHelper.GetStatusBadgeClass(Model);
+    var statusIcon = ArabicFormatHelper.GetStatusIcon(Model);
+}
+
+<span class="badge @badgeClass">
+    <i class="bi @statusIcon"></i>
+    @statusText
+</span>

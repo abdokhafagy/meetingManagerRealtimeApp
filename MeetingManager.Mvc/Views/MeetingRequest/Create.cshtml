@@ -1,0 +1,82 @@
+@model MeetingManager.Application.DTOs.MeetingRequest.CreateMeetingRequestDto
+
+@{
+    ViewData["Title"] = "إنشاء طلب اجتماع";
+}
+
+<div class="container mt-4 fade-in">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-7">
+            <div class="card">
+                <div class="card-header">
+                    <i class="bi bi-calendar-plus" style="font-size: 2rem;"></i>
+                    <h2 class="mt-2">إنشاء طلب اجتماع جديد</h2>
+                    <p class="mb-0" style="font-size: 0.9rem; opacity: 0.9;">قم بملء النموذج التالي لإنشاء طلب اجتماع</p>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                        
+                        <div class="mb-4">
+                            <label asp-for="StudentId" class="form-label">
+                                <i class="bi bi-mortarboard ms-1"></i>
+                                رقم الطالب
+                            </label>
+                            <input asp-for="StudentId" class="form-control" type="number" placeholder="أدخل رقم الطالب" />
+                            <span asp-validation-for="StudentId" class="text-danger"></span>
+                            <small class="form-text">
+                                <i class="bi bi-info-circle ms-1"></i>
+                                أدخل رقم الطالب الذي يطلب الاجتماع
+                            </small>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label asp-for="Notes" class="form-label">
+                                <i class="bi bi-journal-text ms-1"></i>
+                                ملاحظات الاجتماع
+                            </label>
+                            <textarea asp-for="Notes" class="form-control" rows="5" placeholder="أدخل ملاحظات وتفاصيل الاجتماع هنا..."></textarea>
+                            <span asp-validation-for="Notes" class="text-danger"></span>
+                            <small class="form-text">اكتب سبب طلب الاجتماع والمواضيع المراد مناقشتها</small>
+                        </div>
+                        
+                        <div class="alert alert-info">
+                            <i class="bi bi-info-circle-fill ms-1"></i>
+                            <strong>ملاحظة:</strong> سيتم تعيين طلب الاجتماع تلقائياً للمدير في مجموعتك.
+                        </div>
+                        
+                        <div class="d-flex gap-2 justify-content-end mt-4">
+                            <a asp-action="Index" class="btn btn-secondary">
+                                <i class="bi bi-x-circle ms-1"></i>
+                                إلغاء
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-circle ms-1"></i>
+                                إنشاء الطلب
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="card mt-3">
+                <div class="card-body">
+                    <h6 class="fw-semibold mb-3">
+                        <i class="bi bi-lightbulb ms-1"></i>
+                        نصائح لكتابة طلب اجتماع فعال:
+                    </h6>
+                    <ul class="mb-0 text-muted" style="font-size: 0.9rem;">
+                        <li>حدد الهدف الرئيسي من الاجتماع بوضوح</li>
+                        <li>اذكر المواضيع أو القضايا المراد مناقشتها</li>
+                        <li>أضف أي معلومات مهمة تساعد المدير في التحضير</li>
+                        <li>كن مختصراً وواضحاً في صياغة الملاحظات</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,175 @@
+@model MeetingManager.Application.DTOs.MeetingRequest.MeetingRequestDto
+@using MeetingManager.Mvc.Helpers
+
+@{
+    ViewData["Title"] = "تفاصيل طلب الاجتماع";
+}
+
+<div class="container mt-4 fade-in">
+    <div class="row justify-content-center">
+        <div class="col-md-9 col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    <i class="bi bi-file-text" style="font-size: 2rem;"></i>
+                    <h2 class="mt-2">تفاصيل طلب الاجتماع</h2>
+                    <p class="mb-0" style="font-size: 0.9rem; opacity: 0.9;">معلومات كاملة عن الطلب رقم @Model.Id</p>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="p-3 bg-light rounded">
+                                <h6 class="text-muted mb-2">
+                                    <i class="bi bi-hash ms-1"></i>
+                                    رقم الطلب
+                                </h6>
+                                <p class="h4 mb-0 fw-bold text-primary">@Model.Id</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-4">
+                            <div class="p-3 bg-light rounded">
+                                <h6 class="text-muted mb-2">
+                                    <i class="bi bi-flag ms-1"></i>
+                                    الحالة
+                                </h6>
+                                <p class="mb-0">
+                                    @await Html.PartialAsync("_StatusBadge", Model.Status)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <hr class="my-4" />
+                    
+                    <dl class="row mb-0">
+                        <dt class="col-sm-4 mb-3">
+                            <i class="bi bi-journal-text text-primary ms-1"></i>
+                            الملاحظات
+                        </dt>
+                        <dd class="col-sm-8 mb-3">
+                            <div class="alert alert-secondary mb-0">
+                                @Model.Notes
+                            </div>
+                        </dd>
+                        
+                        <dt class="col-sm-4 mb-3">
+                            <i class="bi bi-mortarboard text-primary ms-1"></i>
+                            الطالب
+                        </dt>
+                        <dd class="col-sm-8 mb-3">
+                            <strong>@Model.StudentName</strong>
+                            <span class="text-muted">(رقم: @Model.StudentId)</span>
+                        </dd>
+                        
+                        <dt class="col-sm-4 mb-3">
+                            <i class="bi bi-person-badge text-primary ms-1"></i>
+                            السكرتير
+                        </dt>
+                        <dd class="col-sm-8 mb-3">
+                            <strong>@Model.SecretaryName</strong>
+                            <span class="text-muted">(رقم: @Model.SecretaryId)</span>
+                        </dd>
+                        
+                        <dt class="col-sm-4 mb-3">
+                            <i class="bi bi-person-check text-primary ms-1"></i>
+                            المدير
+                        </dt>
+                        <dd class="col-sm-8 mb-3">
+                            <strong>@Model.ManagerName</strong>
+                            <span class="text-muted">(رقم: @Model.ManagerId)</span>
+                        </dd>
+                        
+                        <dt class="col-sm-4 mb-3">
+                            <i class="bi bi-people text-primary ms-1"></i>
+                            المجموعة
+                        </dt>
+                        <dd class="col-sm-8 mb-3">
+                            <span class="badge bg-info">
+                                <i class="bi bi-diagram-3 ms-1"></i>
+                                @Model.GroupName (رقم: @Model.GroupId)
+                            </span>
+                        </dd>
+                    </dl>
+                    
+                    <hr class="my-4" />
+                    
+                    <h5 class="mb-3">
+                        <i class="bi bi-clock-history text-primary ms-1"></i>
+                        معلومات التوقيت
+                    </h5>
+                    
+                    <dl class="row mb-0">
+                        <dt class="col-sm-4 mb-2">
+                            <i class="bi bi-calendar-plus text-success ms-1"></i>
+                            تم الإنشاء في
+                        </dt>
+                        <dd class="col-sm-8 mb-2">
+                            <span class="badge bg-success-subtle text-success">
+                                <i class="bi bi-calendar-event ms-1"></i>
+                                @ArabicFormatHelper.FormatDateTime(Model.CreatedAt)
+                            </span>
+                        </dd>
+                        
+                        @if (Model.UpdatedAt.HasValue)
+                        {
+                            <dt class="col-sm-4 mb-2">
+                                <i class="bi bi-calendar-check text-warning ms-1"></i>
+                                آخر تحديث
+                            </dt>
+                            <dd class="col-sm-8 mb-2">
+                                <span class="badge bg-warning-subtle text-warning">
+                                    <i class="bi bi-calendar-event ms-1"></i>
+                                    @ArabicFormatHelper.FormatDateTime(Model.UpdatedAt.Value)
+                                </span>
+                            </dd>
+                        }
+                    </dl>
+                    
+                    @if (Model.Status == MeetingManager.Domain.Enums.MeetingRequestStatus.Pending)
+                    {
+                        <hr class="my-4" />
+                        
+                        <h5 class="mb-3">
+                            <i class="bi bi-gear text-primary ms-1"></i>
+                            إجراءات سريعة
+                        </h5>
+                        
+                        <div class="d-flex gap-2 flex-wrap">
+                            <form asp-action="UpdateStatus" method="post" class="d-inline">
+                                <input type="hidden" name="id" value="@Model.Id" />
+                                <button type="submit" name="status" value="1" 
+                                        class="btn btn-success"
+                                        onclick="return confirm('هل تريد قبول هذا الطلب؟')">
+                                    <i class="bi bi-check-circle ms-1"></i>
+                                    قبول الطلب
+                                </button>
+                            </form>
+                            <form asp-action="UpdateStatus" method="post" class="d-inline">
+                                <input type="hidden" name="id" value="@Model.Id" />
+                                <button type="submit" name="status" value="2" 
+                                        class="btn btn-danger"
+                                        onclick="return confirm('هل تريد رفض هذا الطلب؟')">
+                                    <i class="bi bi-x-circle ms-1"></i>
+                                    رفض الطلب
+                                </button>
+                            </form>
+                        </div>
+                    }
+                    
+                    <hr class="my-4" />
+                    
+                    <div class="d-flex gap-2 justify-content-between">
+                        <a asp-action="Index" class="btn btn-secondary">
+                            <i class="bi bi-arrow-right ms-1"></i>
+                            العودة للقائمة
+                        </a>
+                        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">
+                            <i class="bi bi-pencil-square ms-1"></i>
+                            تعديل
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

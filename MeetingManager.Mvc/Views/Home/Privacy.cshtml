@@ -1,0 +1,65 @@
+﻿@{
+    ViewData["Title"] = "سياسة الخصوصية";
+}
+
+<div class="container mt-4 fade-in">
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    <i class="bi bi-shield-check" style="font-size: 2rem;"></i>
+                    <h2 class="mt-2">@ViewData["Title"]</h2>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <i class="bi bi-info-circle-fill ms-1"></i>
+                        <strong>ملاحظة:</strong> استخدم هذه الصفحة لتوضيح سياسة الخصوصية الخاصة بنظامك.
+                    </div>
+                    
+                    <h4 class="mt-4 mb-3">
+                        <i class="bi bi-1-circle text-primary ms-1"></i>
+                        جمع المعلومات
+                    </h4>
+                    <p class="text-muted">
+                        نحن نجمع المعلومات التي تقدمها لنا مباشرة عند استخدام نظام إدارة الاجتماعات، 
+                        بما في ذلك الاسم والبريد الإلكتروني ومعلومات الاجتماعات.
+                    </p>
+                    
+                    <h4 class="mt-4 mb-3">
+                        <i class="bi bi-2-circle text-primary ms-1"></i>
+                        استخدام المعلومات
+                    </h4>
+                    <p class="text-muted">
+                        نستخدم المعلومات التي نجمعها لتوفير وصيانة وتحسين خدماتنا، 
+                        ولإرسال الإشعارات المتعلقة بطلبات الاجتماعات.
+                    </p>
+                    
+                    <h4 class="mt-4 mb-3">
+                        <i class="bi bi-3-circle text-primary ms-1"></i>
+                        حماية المعلومات
+                    </h4>
+                    <p class="text-muted">
+                        نحن نأخذ أمن بياناتك على محمل الجد ونستخدم التدابير الأمنية المناسبة 
+                        لحماية معلوماتك الشخصية من الوصول غير المصرح به.
+                    </p>
+                    
+                    <h4 class="mt-4 mb-3">
+                        <i class="bi bi-4-circle text-primary ms-1"></i>
+                        الاتصال بنا
+                    </h4>
+                    <p class="text-muted">
+                        إذا كان لديك أي أسئلة حول سياسة الخصوصية هذه، 
+                        يرجى الاتصال بفريق الدعم لدينا.
+                    </p>
+                    
+                    <div class="mt-4">
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-primary">
+                            <i class="bi bi-arrow-right ms-1"></i>
+                            العودة للصفحة الرئيسية
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
